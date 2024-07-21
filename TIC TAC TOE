@@ -1,0 +1,58 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+
+def nextMove(player, board):
+    opponent = 'O' if player == 'X' else 'X'
+    
+    def check_winning_move(b, p):
+        for i in range(3):
+            for j in range(3):
+                if b[i][j] == '_':
+                    b[i][j] = p
+                    if is_winner(b, p):
+                        b[i][j] = '_'
+                        return (i, j)
+                    b[i][j] = '_'
+        return None
+    
+    def is_winner(b, p):
+        for i in range(3):
+            if all(b[i][j] == p for j in range(3)):
+                return True
+            if all(b[j][i] == p for j in range(3)):
+                return True
+        if b[0][0] == p and b[1][1] == p and b[2][2] == p:
+            return True
+        if b[0][2] == p and b[1][1] == p and b[2][0] == p:
+            return True
+        return False
+    
+    # Check if the current player can win in the next move
+    move = check_winning_move(board, player)
+    if move:
+        print(move[0], move[1])
+        return
+    
+    # Check if the opponent can win in their next move, and block it
+    move = check_winning_move(board, opponent)
+    if move:
+        print(move[0], move[1])
+        return
+    
+    # Otherwise, take the first empty spot
+    for i in range(3):
+        for j in range(3):
+            if board[i][j] == '_':
+                print(i, j)
+                return
+
+if __name__ == '__main__':
+    player = input().strip()
+    board = [input().strip() for _ in range(3)]
+    nextMove(player, board)
