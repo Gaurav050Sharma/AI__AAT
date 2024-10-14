@@ -6,6 +6,7 @@ grid = []
 node_expanded = []
 queue = []
 answer_routes = None
+xxxx = 0
 
 for i in range(0, n):
     grid.append(list(map(str, input())))
